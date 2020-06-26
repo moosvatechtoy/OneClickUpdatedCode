@@ -1,7 +1,7 @@
 resource "null_resource" "config-temp" {
    # takes the back-up of config file if exists
   provisioner "local-exec" {
-     command = "[ -f $HOME/.kube/config ] && sudo mv $HOME/.kube/config $HOME/.kube/config_$(date +%F-%H:%M) || echo \"config file does not exist.\""
+     command = "[ -f $HOME/.kube/config ] && mv $HOME/.kube/config $HOME/.kube/config_$(date +%F-%H:%M) || echo \"config file does not exist.\""
   } 
 
    # Copies the kubeconf file to ~/.kube/config

@@ -22,15 +22,15 @@ resource "null_resource" "config-temp" {
  
    # Copies the kubeconf file to ~/.kube/config
    provisioner "local-exec" {
-     #command = "sudo rm -rf ~/.kube/"
-     command = "[ -f /$HOME/.kube/config ] && sudo mv /$HOME/.kube/config /$HOME/.kube/config_$(date +%F-%H:%M) || echo \"config file does not exist.\""
+     #command = "rm -rf ~/.kube/"
+     command = "[ -f /$HOME/.kube/config ] && mv /$HOME/.kube/config /$HOME/.kube/config_$(date +%F-%H:%M) || echo \"config file does not exist.\""
   } 
    provisioner "local-exec" {
-     #command = "sudo mkdir ~/.kube"
-     command = "[ -d /$HOME/.kube/ ] && echo \".kube dir exists.\" || sudo mkdir ~/.kube"
+     #command = "mkdir ~/.kube"
+     command = "[ -d /$HOME/.kube/ ] && echo \".kube dir exists.\" || mkdir ~/.kube"
   }
    provisioner "local-exec" {
-     command = "sudo mv ./config ~/.kube/config"
+     command = "mv ./config ~/.kube/config"
  }
   depends_on = [
      local_file.config-temp
