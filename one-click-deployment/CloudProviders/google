@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function googleApply() {
+    read -p "Infrastructure plan is read, Would you like to create (Yes / No): " INPUT
+    case $INPUT in
+    yes | YES | Yes | Y | y )
+    pk apply google_plan.out
+    ;;
+    No | NO | N | no | n )
+    echo "Your plan has been saved as google_plan.out"
+    exit 0
+    ;;
+    *)
+    echo "Your plan has been saved as google_plan.out"
+    exit 0
+    ;;
+esac
+}
+
+function googleInit() {
+      source ./functions
+      cd ./Code/gke/Kubernetes
+      pk init
+      clear
+      echo "Please provide the below details to setup your Google Infra"
+      pk plan -out google_plan.out &&  googleApply
+}

@@ -1,0 +1,27 @@
+#!/bin/bash
+      
+function azureApply() {
+    read -p "Infrastructure plan is read, Would you like to create (Yes / No): " INPUT
+    case $INPUT in
+    yes | YES | Yes | Y | y )
+    pk apply azure_plan.out
+    ;;
+    No | NO | N | no | n )
+    echo "Your plan has been saved as azure_plan.out"
+    exit 0
+    ;;
+    *)
+    echo "Your plan has been saved as azure_plan.out"
+    exit 0
+    ;;
+esac
+}
+
+function azureInit() {
+      source ./functions
+      cd ./Code/aks/Kubernetes
+      pk init
+      clear
+      echo "Please provide the below details to setup your Azure Infra"
+      pk plan -out azure_plan.out &&  azureApply
+}

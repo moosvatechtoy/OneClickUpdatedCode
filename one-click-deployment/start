@@ -1,0 +1,91 @@
+#!/bin/bash
+source ./validator
+
+
+clear
+echo "Welcome to Pk global one click infrastructure setup"
+
+echo "Please aselect the kind in infrastructure you want to setup"
+echo ' 1. ONPREM'
+echo ' 2. CLOUD'
+read  -p 'Select the infrastructure : ' INFRA
+
+case $INFRA in
+
+  1 | onprem | ONPREM)
+    clear
+     echo "you have selected onprem as your Environment, Please wait while we check the dependencies"
+            terraformPackage
+	          onprem
+            echo "Dependencies Validated Successfully"
+            source ./CloudProviders/onprem
+            onpremInit
+    ;;
+
+  2 | CLOUD | cloud)
+        clear
+	echo 'In which cloud you would like to setup the infra'
+  echo '1. AWS'
+	echo '2. AZURE'
+	echo '3. Google'
+	read -p 'Select cloud provider : ' PROVIDER
+        case $PROVIDER in
+  	  AWS | aws | 1)
+            echo "you have selected AWS as your cloud provider, Please wait while we check the dependencies"
+            CREDDEFAULT=$HOME/.aws/credentials
+            if [[ -f "$CREDDEFAULT" ]]; then
+                echo "Using Default Credentials from : $CREDDEFAULT"
+                source ./functions
+                CredConfirm
+            else
+                echo "AWS CLI is NOT configured!" 
+                echo "Please See https://developers.google.com/accounts/docs/application-default-credentials for more information."
+                exit 0
+            fi
+            terraformPackage
+	          awsCloud
+            echo "Dependencies Validated Successfully"
+            source ./CloudProviders/aws
+            awsInit
+	  ;;
+	  AZURE | azure | 2)
+            terraformPackage
+            azureCloud
+            echo "Dependencies Validated Successfully"
+            source ./CloudProviders/azure
+            azureInit
+	  ;;
+	    Google | google | 3)
+            echo "you have selected Google as your cloud provider, Please wait while we check the dependencies"
+            if [[ -z "$GOOGLE_APPLICATION_CREDENTIALS" ]]; then
+                CREDDEFAULT=$HOME/.config/gcloud/application_default_credentials.json
+                if [[ -f "$CREDDEFAULT" ]]; then
+                   echo "Using Application Default Credentials (ADC) from : $CREDDEFAULT"
+                   source ./functions
+                   CredConfirm
+                else
+                   echo "No Google Application Credentials are available" 
+                   echo "Please See https://developers.google.com/accounts/docs/application-default-credentials for more information."
+                   exit 0
+                fi
+            else
+                echo "Using Google Application Credentials from : $GOOGLE_APPLICATION_CREDENTIALS"
+                source ./functions
+                CredConfirm
+            fi
+            terraformPackage
+            googleCloud
+            echo "Dependencies Validated Successfully"
+            source ./CloudProviders/google
+            googleInit
+	  ;;
+          *)
+          echo "Currently this provider is not supported"
+	 ;;
+       esac
+    ;;
+
+  *)
+    echo "Input Unknown, Please select the correct input"
+    ;;
+esac

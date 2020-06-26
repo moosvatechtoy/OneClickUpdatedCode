@@ -1,0 +1,27 @@
+#!/bin/bash
+      
+function onpremApply() {
+    read -p "Infrastructure plan is read, Would you like to create (Yes / No): " INPUT
+    case $INPUT in
+    yes | YES | Yes | Y | y )
+    pk apply onprem_plan.out
+    ;;
+    No | NO | N | no | n )
+    echo "Your plan has been saved as onprem_plan.out"
+    exit 0
+    ;;
+    *)
+    echo "Your plan has been saved as onprem_plan.out"
+    exit 0
+    ;;
+esac
+}
+
+function onpremInit() {
+      source ./functions
+      cd ./Code/onprem/Kubernetes
+      pk init
+      clear
+      echo "Please provide the below details to setup your OnPrem Infra"
+      pk plan -out onprem_plan.out &&  onpremApply
+}

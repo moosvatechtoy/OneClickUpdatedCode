@@ -1,0 +1,21 @@
+#!/bin/bash
+# prints the input
+function pk() {
+  terraform $1 $2 $3 $4 $5 $6
+}
+
+function CredConfirm() {
+    read -p "Would you like to continue with these credentials? (Yes / No): " CREDINPUT
+      case $CREDINPUT in
+      yes | YES | Yes | Y | y )
+      ;;
+      No | NO | N | no | n )
+      echo "Please configure your credentials and try again!"
+      exit 0
+      ;;
+      *)
+      echo "Invalid input"
+      exit 0
+      ;;
+	esac
+}

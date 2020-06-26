@@ -1,0 +1,28 @@
+#!/bin/bash
+      
+function awsApply() {
+    read -p "Infrastructure plan is read, Would you like to create (Yes / No): " INPUT
+    case $INPUT in
+    yes | YES | Yes | Y | y )
+    pk apply aws_plan.out
+    ;;
+    No | NO | N | no | n )
+    echo "Your plan has been saved as aws_plan.out"
+    exit 0
+    ;;
+    *)
+    echo "Your plan has been saved as aws_plan.out"
+    exit 0
+    ;;
+esac
+}
+
+function awsInit() {
+      source ./functions
+      cd ./Code/eks/Kubernetes
+      pk init
+      clear
+      echo "Please provide the below details to setup your AWS Infra"
+      pk plan -out aws_plan.out &&  awsApply
+}
+

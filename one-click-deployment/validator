@@ -1,0 +1,65 @@
+#!/bin/bash
+function terraformPackage() {
+         TERRAFORM=`which terraform | wc -l`
+          if [ $TERRAFORM != 1 ]; then
+            echo "Terraform Package is missing Please follow the link for installation"
+            echo "https://www.terraform.io/downloads.html"
+            exit 0
+	 fi
+}
+
+function onprem() {
+         ONPREM=`which onprem | wc -l`
+          if [ ONPREM != 1 ] ; then
+            echo "Please follow the link for installation"
+            echo "Install Successfully"
+	 fi
+}
+
+function awsCloud() {
+         AWS=`which aws | wc -l`
+          if [ $AWS != 1 ] ; then
+            echo "AWS CLI is missing Please follow the link for installation"
+            echo "https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html"
+            exit 0
+	 fi
+   if  [[ $(find $HOME/bin -name aws-iam-authenticator) != $HOME/bin/aws-iam-authenticator ]]
+        then
+          echo 'installing...  aws-iam-authenticator.....'
+          curl -o ~/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
+          chmod +x ~/aws-iam-authenticator
+          mkdir -p $HOME/bin && mv ~/aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+          echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+    fi
+
+    KUBECTL=`which kubectl | wc -l`
+    if [ $KUBECTL != 1 ] ; then
+          echo 'installing.......Kubernetes latest version:.......'
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+    fi
+}
+
+function azureCloud() {
+         AZ=`which az | wc -l`
+          if [ $AZ != 1 ]  ; then
+            echo "Azure CLI is missing Please follow the link for installation"
+            echo "https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest"
+	 fi
+}
+function googleCloud() {
+         GC=`which gcloud | wc -l`
+          if [ $GC != 1 ]  ; then
+            echo "Google CLI is missing Please follow the link for installation"
+            echo "https://cloud.google.com/sdk/docs/quickstart-linux"
+	 fi
+
+    KUBECTL=`which kubectl | wc -l`
+    if [ $KUBECTL != 1 ] ; then
+          echo 'installing.......Kubernetes latest version:.......'
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+    fi
+}
