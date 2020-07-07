@@ -77,6 +77,18 @@ variable "client_secret" {
   type        = string
 }
 
+variable "subscription_id" {
+  description = "Please specify subscription_id."
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "Please specify tenant_id."
+  type        = string
+}
+
+# Azure Credentials - END
+
 variable "dns_prefix" {
   description = "DNS prefix specified when creating the managed cluster. It must start with a letter and must end with a letter or a number."
   type        = string
