@@ -81,8 +81,8 @@ $ ssh-keygen -b 4096 -t rsa -f ~/.ssh/node-ssh-key
 Generating public/private rsa key pair.
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
-Your identification has been saved in /home/jims/.ssh/node-ssh-key.
-Your public key has been saved in /home/jims/.ssh/node-ssh-key.pub.
+Your identification has been saved in /home/user/.ssh/node-ssh-key.
+Your public key has been saved in /home/user/.ssh/node-ssh-key.pub.
 The key fingerprint is:
 SHA256:+8pQ4MuQcf0oKT6LQkyoN6uswApLZQm1xXc+pp4ewvs jims@fubu
 The key's randomart image is:
@@ -137,6 +137,7 @@ run the following command to store access key as env variable
 
 ```bash
 export ARM_ACCESS_KEY=13hTpMO2xi585bjul96RGaEDMTnsigAS1Yjrn9mP3A++VomWZpF+OJcMHN8R+TVnkj+NdA+2oYZTIIGt564rIA==
+
 ```
 
 During the terraform initialization, only for the first time it will prompt for Storage account, Container name and Key name (Name of the state file to store) for the user to enter. 
@@ -159,5 +160,10 @@ agent_vm_size  --> The size of the Virtual Machine, such as *Standard_DS1_v2*
 os_disk_size_gb  --> The disk size of the Virtual Machine in GB *ex: 30*
 subnet_prefixes  --> The address prefix to use for the subnet. *ex: ["10.10.1.0/24", "10.10.2.0/24"]*
 ```
+Alternatively, client_id and client_secret can be exported as TF variables instead of passing as variable 
 
+```
+export TF_VAR_client_id=18262b84-XXXX-XXXX-XXXX-7f6191dc0607
+export TF_VAR_client_secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
 After applying the terraform plan, kube-config will be automatically stored as ~/.kube/config file

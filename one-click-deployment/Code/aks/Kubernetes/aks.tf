@@ -45,18 +45,35 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     }
   }
 
-  agent_pool_profile {
+  default_node_pool {
     name            = "default"
     enable_auto_scaling = true
-    count           = var.initial_vm_count
+    enable_node_public_ip = false
+    node_count      = var.initial_vm_count
     min_count       = var.min_vm_count
     max_count       = var.max_vm_count
     vm_size         = var.agent_vm_size
-    os_type         = var.worker_nodes_os_type
+    #os_type         = var.worker_nodes_os_type
     os_disk_size_gb = 30
     #vnet_subnet_id  = azurerm_subnet.subnet.0.id
     type            = "VirtualMachineScaleSets"
   }
+
+  network_profile {
+    network_plugin     = var.network_plugin
+    network_policy     = var.network_policy
+    service_cidr       = var.service_cidr
+    dns_service_ip     = var.dns_ip
+    docker_bridge_cidr = var.docker_cidr
+  }
+
+
+  # default_node_pool {
+  #     name            = "agentpool"
+  # #   node_count      = var.agent_count
+  #     node_count      = 2
+  #     vm_size         = "Standard_D2_v2"
+  # }
 
   role_based_access_control {
     enabled = true

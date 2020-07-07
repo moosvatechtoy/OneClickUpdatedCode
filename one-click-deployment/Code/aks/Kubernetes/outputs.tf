@@ -1,26 +1,24 @@
-output "vnet_id" {
-  description = "The id of the vNet"
-  value       = azurerm_virtual_network.vnet.id
+output "client_key" {
+    sensitive = true
+    value = azurerm_kubernetes_cluster.cluster.kube_config.0.client_key
 }
 
-output "vnet_name" {
-  description = "The Name of the vNet"
-  value       = azurerm_virtual_network.vnet.name
+output "cluster_ca_certificate" {
+    sensitive = true
+    value = azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate
 }
 
-output "vnet_location" {
-  description = "The location of the vNet"
-  value       = azurerm_virtual_network.vnet.location
+output "cluster_username" {
+    value = azurerm_kubernetes_cluster.cluster.kube_config.0.username
 }
 
-output "vnet_address_space" {
-  description = "The address space of the vNet"
-  value       = azurerm_virtual_network.vnet.address_space
+output "cluster_password" {
+    sensitive = true
+    value = azurerm_kubernetes_cluster.cluster.kube_config.0.password
 }
 
-output "vnet_subnet_ids" {
-  description = "The ids of subnets created inside the vNet"
-  value       = azurerm_subnet.subnet.*.id
+output "host" {
+    value = azurerm_kubernetes_cluster.cluster.kube_config.0.host
 }
 
 output "client_certificate" {

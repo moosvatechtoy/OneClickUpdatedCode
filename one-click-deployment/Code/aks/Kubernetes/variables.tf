@@ -1,9 +1,15 @@
 
 variable "resource_group_name" {
-  description = "Default resource group name that the network will be created in."
+  description = "Enter the exisitng resource group in which cluster will be created."
   type        = string
   #default     = "aksdemorg"
 }
+
+#variable "location" {
+#    description = "Location in which resource group, cluster and log analytics are created. Ex: East US 'or' North Europe"
+#    type = string
+#    default = "Central US"
+#}
 
 variable "cluster_name" {
   description = "The name of the Managed Kubernetes Cluster to create. Changing this forces a new resource to be created."
@@ -32,13 +38,13 @@ variable "min_vm_count" {
 variable "max_vm_count" {
   description = "Please specify maximum number of worker nodes for AKS Cluster."
   type    = number
-  #default = 3
+  #default = 2
 }
 
 variable "agent_vm_size" {
-  description = "The size of the Virtual Machine, such as Standard_DS1_v2"
+  description = "The size of the Virtual Machine, such as Standard_DS2_v2"
   type    = string
-  #default = "Standard_DS1_v2"
+  #default = "Standard_B2s"
 }
 
 variable "os_disk_size_gb" {
@@ -105,19 +111,31 @@ variable "dns_servers" {
   default     = []
 }
 
-#variable "subnet_service_endpoints" {
-#  description = "A list of the service endpoints for the subnet (e.g. Microsoft.Web)"
-#  type        = list
-#  default     = [[], []]
-#}
+#variable for advanced networking
 
-#variable "tags" {
-#  description = "The tags to associate with your network and subnets."
-#  type        = map
-#  default = {
-#    tag1 = "tag1"
-#    tag2 = "tag2"
-#  }
-#}
+variable "network_plugin" {
+  default     = "azure"
+  description = "Network plugin used by AKS. Either azure or kubenet."
+}
+variable "network_policy" {
+  default     = "azure"
+  description = "Network policy to be used with Azure CNI. Either azure or calico."
+}
 
+variable "service_cidr" {
+  default     = "10.0.0.0/16"
+  description = "Used to assign internal services in the AKS cluster an IP address. This IP address range should be an address space that isn't in use elsewhere in your network environment. This includes any on-premises network ranges if you connect, or plan to connect, your Azure virtual networks using Express Route or a Site-to-Site VPN connections."
+  type        = string
+}
+
+variable "dns_ip" {
+  default     = "10.0.0.10"
+  description = "should be the .10 address of your service IP address range"
+  type        = string
+}
+
+variable "docker_cidr" {
+  default     = "172.17.0.1/16"
+  description = "IP address (in CIDR notation) used as the Docker bridge IP address on nodes. Default of 172.17.0.1/16."
+}
 
