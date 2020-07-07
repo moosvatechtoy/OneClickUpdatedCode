@@ -149,6 +149,9 @@ Following variables has to be entered by users which are taken as inputs for clu
 ```list
 client_id --> Please specify client_id (service_principal_id).
 client_secret  --> Please specify client_secret (service_principal_secret).
+subscription_id --> Subsription_id
+tenant_id --> tenant_id
+availability_zones --> A list of AZs across which the Node Pool should be spread. Ex: ["1", "2", "3"]
 resource_group_name  --> Default resource group name that the network will be created in.
 cluster_name  --> The name of the Managed Kubernetes Cluster to create.
 ssh_public_key  --> The ssh_public_key is the RSA public key that was created for AKS node access. *ex: ssh-rsa XXXXX... user@example*
@@ -167,3 +170,12 @@ export TF_VAR_client_id=18262b84-XXXX-XXXX-XXXX-7f6191dc0607
 export TF_VAR_client_secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 After applying the terraform plan, kube-config will be automatically stored as ~/.kube/config file
+
+Note:
+```
+1. Not all the regions have multiple zones (ex:India, West US). So users need to provide the AZs list based on region in which resource group exists, as we are taking the location from the resource group instead of asking users to enter the location. 
+    - for region central US, if they enter AZ as ["1", "2"] or ["1", "2", "3"], it will be fine.
+    - for region central india, if they enter any thing other than [], it will fail.
+2. Also, vm size (instance type) is also based on the location of resource group. terraform apply will be failed if proper type is not provided by user.
+```
+Above two failures will not occur during PLAN, failure happens only during APPLY.

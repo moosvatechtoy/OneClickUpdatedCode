@@ -5,6 +5,13 @@ variable "resource_group_name" {
   #default     = "aksdemorg"
 }
 
+variable "availability_zones" {
+  description = "A list of AZs across which the Node Pool should be spread. Ex: [\"1\", \"2\", \"3\"]"
+  type        = list(string)
+  #default     = ["1", "2", "3"]
+  #default    = []
+}
+
 #variable "location" {
 #    description = "Location in which resource group, cluster and log analytics are created. Ex: East US 'or' North Europe"
 #    type = string
@@ -38,13 +45,14 @@ variable "min_vm_count" {
 variable "max_vm_count" {
   description = "Please specify maximum number of worker nodes for AKS Cluster."
   type    = number
-  #default = 2
+  #default = 4
 }
 
 variable "agent_vm_size" {
   description = "The size of the Virtual Machine, such as Standard_DS2_v2"
   type    = string
   #default = "Standard_B2s"
+  #default  = "Standard_D2s_v3"
 }
 
 variable "os_disk_size_gb" {

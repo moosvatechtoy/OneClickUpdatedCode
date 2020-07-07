@@ -49,6 +49,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     name            = "default"
     enable_auto_scaling = true
     enable_node_public_ip = false
+    availability_zones = var.availability_zones
     node_count      = var.initial_vm_count
     min_count       = var.min_vm_count
     max_count       = var.max_vm_count
