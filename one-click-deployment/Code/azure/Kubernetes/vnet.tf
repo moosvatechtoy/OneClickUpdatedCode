@@ -119,7 +119,7 @@ resource "azurerm_availability_set" "avset" {
 
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "mystorageaccount" {
-    name                        = "diag${random_id.workspace.hex}"
+    name                        = "diag${random_string.random.result}"
     resource_group_name         = data.azurerm_resource_group.testrg.name
     location                    = data.azurerm_resource_group.testrg.location
     account_tier                = "Standard"
