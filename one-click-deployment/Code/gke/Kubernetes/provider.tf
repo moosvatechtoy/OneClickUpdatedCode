@@ -5,7 +5,7 @@ locals {
 }
 
 provider "google" {
-#  credentials = var.credentials
+  credentials = var.credentials
   project = var.project_id
   region  = local.gcp_region
 }

@@ -1,8 +1,8 @@
 
-#variable "credentials" {
-#  description = "Absolute path to key file in JSON format. Ex: /home/user/azurekey/project-123.json (without Quotes)"
-#  type        = string
-#}
+variable "credentials" {
+  description = "Absolute path to key file in JSON format. Ex: /home/user/azurekey/project-123.json (without Quotes)"
+  type        = string
+}
 
 variable "project_id" {
   type = string

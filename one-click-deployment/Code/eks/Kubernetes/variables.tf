@@ -2,6 +2,16 @@
 # Variables Configuration
 #
 
+variable "access_key" {
+  type    = string
+  description = "Access key"
+}
+
+variable "secret_key" {
+  type    = string
+  description = "Secret key"
+}
+
 variable "cluster_name" {
 #  default = "pk-terraform-eks"
   type    = string
