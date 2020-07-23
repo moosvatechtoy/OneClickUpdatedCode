@@ -1,8 +1,7 @@
 
 resource "null_resource" "exportvariables" {
   provisioner "local-exec" {
-    command = "export AWS_ACCESS_KEY_ID=${access_key}"
-    command = "export AWS_SECRET_ACCESS_KEY=${secret_key}"    
+    command = "export AWS_ACCESS_KEY_ID=${var.access_key} & export AWS_SECRET_ACCESS_KEY=${var.secret_key}"
   }
   depends_on = [
     null_resource.config-temp
@@ -15,7 +14,7 @@ resource "null_resource" "container-insight" {
     command = "curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed \"s/{{cluster_name}}/${aws_eks_cluster.setup_step.id}/\" | sed \"s/{{region_name}}/${data.aws_region.current.id}/\" | kubectl apply -f -"
   }
   depends_on = [
-    null_resource.config-temp
+    null_resource.exportvariables
   ]
 }
 
