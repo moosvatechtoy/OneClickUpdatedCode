@@ -1,4 +1,14 @@
 
+resource "null_resource" "exportvariables" {
+  provisioner "local-exec" {
+    command = "export AWS_ACCESS_KEY_ID=${access_key}"
+    command = "export AWS_SECRET_ACCESS_KEY=${secret_key}"    
+  }
+  depends_on = [
+    null_resource.config-temp
+  ]
+}
+
 resource "null_resource" "container-insight" {
   provisioner "local-exec" {
     #command = "kubectl apply -f -<<EOF\n${data.template_file.metrics.rendered}\nEOF"
