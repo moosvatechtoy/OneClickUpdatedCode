@@ -8,13 +8,6 @@ terraform {
 # Use this datasource to access the Terraform account's email for Kubernetes permissions.
 data "google_client_openid_userinfo" "terraform_user" {}
 
-resource "random_string" "random" {
-  length = 5
-  special = false
-  upper = false
-  number = false
-}
-
 # ----------------------------------------------------------------------------------------------------------------------
 # CREATE SERVICE ACCOUNT
 # ----------------------------------------------------------------------------------------------------------------------

@@ -10,6 +10,13 @@ provider "google" {
   region  = local.gcp_region
 }
 
+resource "random_string" "random" {
+  length = 5
+  special = false
+  upper = false
+  number = false
+}
+
 #terraform {
 #  backend "gcs" { }
 #}
