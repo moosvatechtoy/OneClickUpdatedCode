@@ -20,6 +20,7 @@ esac
 function awsInit() {
       source ./functions
       cd ./Code/eks/Kubernetes
+      #pk init -backend-config="bucket=sasidhar-state-store" -backend-config="key=terraformstate.tfstate" -backend-config="region=us-east-1"
       pk init
       clear
       echo "Please provide the below details to setup your AWS Infra"

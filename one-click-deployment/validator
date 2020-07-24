@@ -47,6 +47,13 @@ function azureCloud() {
             echo "Azure CLI is missing Please follow the link for installation"
             echo "https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest"
 	 fi
+   KUBECTL=`which kubectl | wc -l`
+    if [ $KUBECTL != 1 ] ; then
+          echo 'installing.......Kubernetes latest version:.......'
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+    fi
 }
 function googleCloud() {
          GC=`which gcloud | wc -l`
